@@ -1,0 +1,22 @@
+defaults:
+  snmp_version: "v2c"
+  timeout_s: 2.5            #per request
+  retries: 1                #retry only on timeouts
+  target_budget_s: 10       #max total time per target
+  oids:
+    - "sysUpTime.0"
+    - "sysName.0"
+
+targets:
+  - name: "Switch"
+  ip: "172.16.0.250"
+  community: "public"
+  oids:
+    - "ifOperStatus.1"
+    - "sysUpTime.0"
+
+  - name: "Localhost"
+  ip: "127.0.0.1"
+  community: "public"
+  oids:
+    - "sysName.0"
