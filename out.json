@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-03-03T14:31:46",
+  "config_file": "config.yml",
+  "duration": 0.3036010265350342,
+  "targets": [
+    {
+      "name": "Switch",
+      "ip": "172.16.0.250",
+      "ok_count": 3,
+      "status": "ok",
+      "fail_count": 0,
+      "runtime": 0.2110137939453125,
+      "results": {
+        "ifOperStatus.1": {
+          "ok": true,
+          "value": "IF-MIB::ifOperStatus.1 = INTEGER: down(2)",
+          "elapsed": 0.12360787391662598
+        },
+        "sysUpTime.0": {
+          "ok": true,
+          "value": "DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (226857636) 26 days, 6:09:36.36",
+          "elapsed": 0.04661893844604492
+        },
+        "sysDescr.0": {
+          "ok": true,
+          "value": "SNMPv2-MIB::sysDescr.0 = STRING: Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE5, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2013 by Cisco Systems, Inc.\nCompiled Fri 25-Oct-13 13:34 by prod_rel_team",
+          "elapsed": 0.04071807861328125
+        }
+      }
+    },
+    {
+      "name": "Localhost",
+      "ip": "127.0.0.1",
+      "ok_count": 1,
+      "status": "ok",
+      "fail_count": 0,
+      "runtime": 0.0754084587097168,
+      "results": {
+        "sysName.0": {
+          "ok": true,
+          "value": "SNMPv2-MIB::sysName.0 = STRING: netops-johkat",
+          "elapsed": 0.0753941535949707
+        }
+      }
+    }
+  ]
+}

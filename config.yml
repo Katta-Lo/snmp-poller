@@ -9,14 +9,15 @@ defaults:
 
 targets:
   - name: "Switch"
-  ip: "172.16.0.250"
-  community: "public"
-  oids:
-    - "ifOperStatus.1"
-    - "sysUpTime.0"
+    ip: "172.16.0.250"
+    community: "public"
+    oids:
+      - "ifOperStatus.1"
+      - "sysUpTime.0"
+      - "sysDescr.0"
 
   - name: "Localhost"
-  ip: "127.0.0.1"
-  community: "public"
-  oids:
-    - "sysName.0"
+    ip: "127.0.0.1"
+    community: "public"
+    oids:
+      - "sysName.0"

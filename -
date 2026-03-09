@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-03-08T17:59:37",
+  "config_file": "config.yml",
+  "duration": 10.174856424331665,
+  "targets": [
+    {
+      "name": "Switch",
+      "ip": "172.16.0.250",
+      "ok_count": 0,
+      "status": "failed",
+      "fail_count": 2,
+      "runtime": 10.027352094650269,
+      "results": {
+        "ifOperStatus.1": {
+          "ok": false,
+          "error": "timeout"
+        },
+        "sysUpTime.0": {
+          "ok": false,
+          "error": "timeout"
+        }
+      }
+    },
+    {
+      "name": "Localhost",
+      "ip": "127.0.0.1",
+      "ok_count": 1,
+      "status": "ok",
+      "fail_count": 0,
+      "runtime": 0.1296379566192627,
+      "results": {
+        "sysName.0": {
+          "ok": true,
+          "value": "SNMPv2-MIB::sysName.0 = STRING: netops-johkat",
+          "elapsed": 0.12962889671325684
+        }
+      }
+    }
+  ]
+}

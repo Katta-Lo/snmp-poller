@@ -8,7 +8,7 @@ import sys
 import logging
 import argparse
 import datetime
-import pyyaml
+
 
 # Open file as Python-dictionary
 
@@ -40,7 +40,7 @@ def validate_config(cfg):
 #Combine defaults with target values, overriding defaults when provided
 
 def merge_defaults(defaults, target):
-    results = defaults.copy() #copy of defaults, not changing the original
+    result = defaults.copy() #copy of defaults, not changing the original
     for key in target:
         result[key] = target[key]
     return result
@@ -60,12 +60,12 @@ def build_snmpget_cmd(target, oid):
 # Execute an SNMP GET command using subprocess, capture output or errors, and measure execution time
 
 def run_snmpget(cmd, timeout_s):
-    start = time.time
+    start = time.time()
     try:
         result = subprocess.run(
             cmd,
             capture_output=True,
-            text=True
+            text=True,
             timeout=timeout_s
         )
 
@@ -76,11 +76,11 @@ def run_snmpget(cmd, timeout_s):
         else:
             return False, result.stderr.strip(), elapsed
 
-        except subprocess.TimeoutExpired:
+    except subprocess.TimeoutExpired:
             elapsed = time.time() - start
-            return False, result.stderr.strip(), elapsed
+            return False, "timeout", elapsed
 
-#
+#SNMP-polling
 def poll_target(target):
     logging.info("Starting target %s (%s)", target["name"], target["ip"])
 
@@ -145,16 +145,84 @@ def poll_target(target):
     else:
         status = "failed"
 
-    logging.info("Finished target %s status=%s runtime=%.2f", 
+    logging.info("Finished target %s status=%s runtime=%.2f",
                 target["name"], status, runtime)
 
     return {
         "name": target["name"],
         "ip": target["ip"],
+        "ok_count": ok_count,
         "status": status,
         "fail_count": fail_count,
         "runtime": runtime,
         "results": results
     }
 
-#main()
+def main():
+#Parse command-line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", required=True)     #Config YAML-file
+    parser.add_argument("--out", required=True)        #Output JSON
+    parser.add_argument("--log-level", default="INFO") #Logging level
+
+    args = parser.parse_args()
+
+#Set up logging
+    logging.basicConfig(
+        level=getattr(logging, args.log_level.upper()),
+        format="%(levelname)s %(message)s"
+    )
+
+#Record start time
+    run_start = time.time()
+
+#Load and validate config
+    cfg = load_config(args.config)   #Load YAML into Python
+
+#Check that config has required keys
+
+    try:
+        validate_config(cfg)
+    except Exception as e:
+        logging.error("Invalid config %s", e)
+        sys.exit(2)
+
+#Prepare defaults and results
+    defaults = cfg.get("defaults", {})
+    all_results = []
+
+    logging.info("Starting run with %d targets", len(cfg["targets"]))
+
+#Poll each target
+    for t in cfg["targets"]:
+        merged = merge_defaults(defaults, t)
+        result = poll_target(merged)
+        all_results.append(result)
+
+#Generate output dict.
+    duration = time.time() - run_start
+
+    output = {
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "config_file": args.config,
+        "duration": duration,
+        "targets": all_results
+    }
+
+#Save results to JSON
+    with open(args.out, "w") as f:
+        json.dump(output, f, indent=2)
+
+#Exit codes based on results
+    total_ok = sum(t.get("ok_count", 0) for t in all_results)
+    total_fail = sum(t.get("fail_count", 0) for t in all_results)
+
+    if total_ok > 0 and total_fail == 0:
+        return 0
+    elif total_ok > 0:
+        return 1
+    else:
+        return 2
+
+if __name__ == "__main__":
+        sys.exit(main())
