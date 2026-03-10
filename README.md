@@ -15,7 +15,7 @@ test_config.py	Simple unit test verifying that the configuration is read and val
 README.md	Documentation for installation and usage.
 
 
-Methods:
+# Methods:
 
 load_config(path)
 Input: File path
@@ -58,25 +58,26 @@ main() calls load_config(), which in turn calls validate_config().
 main() also calls poll_target(), which internally uses build_snmpget_cmd() and then run_snmpget().
 
 
-Installation:
+# Installation:
 
-Requirements
+## Requirements
 Python 3
 Operating system: Linux (SNMP tools required)
 
 
-Install PyYAML:
+## Install PyYAML:
 pip install pyyaml
 
 Install SNMP tools (example for Debian/Ubuntu):
 sudo apt install snmp
 
-How to Run:
+# How to Run:
 
 Basic usage:
 
+```
 python poller.py --config config.yml --out out.json
-
+```
 
 With custom log level:
 
