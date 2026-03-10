@@ -21,3 +21,9 @@ targets:
     community: "public"
     oids:
       - "sysName.0"
+
+  - name: "Stinas_raspberry"
+    ip: 172.16.0.235
+    community: "public"
+    oids:
+      - "SysUpTime.0"

@@ -145,8 +145,16 @@ def poll_target(target):
     else:
         status = "failed"
 
-    logging.info("Finished target %s status=%s runtime=%.2f",
-                target["name"], status, runtime)
+    if status == "ok":
+        logging.info("Finished target %s status=%s runtime=%.2f",
+                 target["name"], status, runtime)
+    elif status == "partial":
+        logging.warning("Finished target %s status=%s runtime=%.2f",
+                    target["name"], status, runtime)
+    else:  # failed
+        logging.error("Finished target %s status=%s runtime=%.2f",
+                  target["name"], status, runtime)
+
 
     return {
         "name": target["name"],

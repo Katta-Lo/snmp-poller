@@ -1,23 +1,30 @@
 {
-  "timestamp": "2026-03-08T17:59:37",
+  "timestamp": "2026-03-10T09:11:19",
   "config_file": "config.yml",
-  "duration": 10.174856424331665,
+  "duration": 0.07847142219543457,
   "targets": [
     {
       "name": "Switch",
       "ip": "172.16.0.250",
-      "ok_count": 0,
-      "status": "failed",
-      "fail_count": 2,
-      "runtime": 10.027352094650269,
+      "ok_count": 3,
+      "status": "ok",
+      "fail_count": 0,
+      "runtime": 0.049013614654541016,
       "results": {
         "ifOperStatus.1": {
-          "ok": false,
-          "error": "timeout"
+          "ok": true,
+          "value": "IF-MIB::ifOperStatus.1 = INTEGER: down(2)",
+          "elapsed": 0.01640176773071289
         },
         "sysUpTime.0": {
-          "ok": false,
-          "error": "timeout"
+          "ok": true,
+          "value": "DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (285414484) 33 days, 0:49:04.84",
+          "elapsed": 0.015278816223144531
+        },
+        "sysDescr.0": {
+          "ok": true,
+          "value": "SNMPv2-MIB::sysDescr.0 = STRING: Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE5, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2013 by Cisco Systems, Inc.\nCompiled Fri 25-Oct-13 13:34 by prod_rel_team",
+          "elapsed": 0.017314910888671875
         }
       }
     },
@@ -27,12 +34,26 @@
       "ok_count": 1,
       "status": "ok",
       "fail_count": 0,
-      "runtime": 0.1296379566192627,
+      "runtime": 0.01228475570678711,
       "results": {
         "sysName.0": {
           "ok": true,
           "value": "SNMPv2-MIB::sysName.0 = STRING: netops-johkat",
-          "elapsed": 0.12962889671325684
+          "elapsed": 0.012278318405151367
+        }
+      }
+    },
+    {
+      "name": "Stinas_raspberry",
+      "ip": "172.16.0.235",
+      "ok_count": 0,
+      "status": "failed",
+      "fail_count": 1,
+      "runtime": 0.01468658447265625,
+      "results": {
+        "SysUpTime.0": {
+          "ok": false,
+          "error": "SysUpTime.0: Unknown Object Identifier (Sub-id not found: (top) -> SysUpTime)"
         }
       }
     }
